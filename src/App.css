@@ -18,54 +18,64 @@ body, html {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Theme-specific styles */
+/* Theme-specific styles with refined animations */
 .theme-option-large {
   border: 1px solid transparent;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .theme-option-large:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Trigger point shape variations */
+/* Enhanced trigger point shape variations */
 .trigger-point.crystal {
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .trigger-point.leaf {
   border-radius: 50% 0 50% 0;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
 
 .trigger-point.anemone {
   border-radius: 45%;
   filter: blur(3px);
+  animation: pulseGlow 4s ease-in-out infinite;
 }
 
 .trigger-point.petal {
   border-radius: 60% 40% 70% 30% / 40% 50% 60% 50%;
   filter: blur(1px);
-  transition: all 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .trigger-point.petal:hover {
   transform: rotate(45deg) scale(1.05);
   filter: blur(0px);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
-/* Animation for falling petals */
+/* Refined falling petals animation */
 @keyframes fall {
   0% {
     transform: translateY(0) rotate(0deg);
     opacity: 0.8;
+  }
+  50% {
+    opacity: 0.9;
   }
   100% {
     transform: translateY(100vh) rotate(360deg);
@@ -88,6 +98,7 @@ body, html {
   }
 }
 
+/* Enhanced petal style */
 .falling-petal {
   position: absolute;
   width: 15px;
@@ -96,25 +107,31 @@ body, html {
   border-radius: 60% 40% 70% 30% / 40% 50% 60% 50%;
   animation: fall linear, sway ease-in-out infinite alternate;
   filter: blur(1px);
-  box-shadow: 0 0 5px rgba(255, 203, 211, 0.4);
+  box-shadow: 
+    0 0 5px rgba(255, 203, 211, 0.4),
+    inset 0 0 3px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
   z-index: 1;
   pointer-events: none;
 }
 
-/* Moving clouds animation */
+/* Refined cloud animation */
 @keyframes cloudDrift {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-100%) scale(1);
     opacity: 0;
   }
   10% {
     opacity: 0.2;
   }
+  50% {
+    transform: translateX(50vw) scale(1.1);
+  }
   90% {
     opacity: 0.2;
   }
   100% {
-    transform: translateX(100vw);
+    transform: translateX(100vw) scale(1);
     opacity: 0;
   }
 }
@@ -124,7 +141,30 @@ body, html {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   filter: blur(20px);
+  backdrop-filter: blur(5px);
   z-index: 0;
   animation: cloudDrift linear;
   pointer-events: none;
 }
+
+/* New pulse glow animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Settings panel refinements */
+.settings-panel {
+  backdrop-filter: blur(12px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+

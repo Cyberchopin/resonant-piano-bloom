@@ -31,56 +31,64 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   
   return (
     <>
-      {/* Settings button */}
+      {/* Refined settings button */}
       <div className="fixed bottom-4 right-4 z-50">
         <button 
           onClick={onToggle} 
-          className="bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/30 transition-all duration-200"
+          className="bg-white/10 backdrop-blur-lg p-3 rounded-full hover:bg-white/20 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
         >
           <Settings className="w-5 h-5 text-white" />
         </button>
       </div>
       
-      {/* Settings panel */}
+      {/* Enhanced settings panel */}
       <div 
         className={`settings-panel transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ color: currentTheme ? themes[currentTheme].textColor : 'white' }}
       >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">Settings</h2>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-semibold tracking-tight">Settings</h2>
           <button 
             onClick={onToggle}
-            className="p-1 rounded-full hover:bg-white/20 transition-colors"
+            className="p-2 rounded-full hover:bg-white/10 transition-all duration-300"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <div className="space-y-6">
-          {/* Theme selection */}
+        <div className="space-y-8">
+          {/* Theme selection with enhanced visuals */}
           <div>
-            <h3 className="text-lg font-medium mb-2">Theme</h3>
+            <h3 className="text-lg font-medium mb-4">Theme</h3>
             <div className="flex flex-col space-y-3">
               {Object.entries(themes).map(([themeName, theme]) => (
                 <button
                   key={themeName}
-                  className={`theme-option-large flex items-center p-2 rounded-md transition-colors ${currentTheme === themeName ? 'bg-white/20' : 'hover:bg-white/10'}`}
+                  className={`theme-option-large flex items-center p-3 rounded-lg transition-all duration-300 ${
+                    currentTheme === themeName 
+                      ? 'bg-white/20 shadow-lg' 
+                      : 'hover:bg-white/10'
+                  }`}
                   onClick={() => onThemeChange(themeName as ThemeName)}
                   aria-label={`${theme.displayName} theme`}
                 >
                   <div 
-                    className="w-8 h-8 rounded-full mr-3"
-                    style={{ backgroundColor: theme.backgroundColor, boxShadow: `0 0 10px ${theme.triggerColors[0]}` }}
+                    className="w-10 h-10 rounded-full mr-4 shadow-lg transition-all duration-300"
+                    style={{ 
+                      backgroundColor: theme.backgroundColor,
+                      boxShadow: `0 0 20px ${theme.triggerColors[0]}`,
+                      transform: currentTheme === themeName ? 'scale(1.1)' : 'scale(1)'
+                    }}
                   />
-                  <span>{theme.displayName}</span>
+                  <span className="text-sm font-medium">{theme.displayName}</span>
                 </button>
               ))}
             </div>
           </div>
           
-          {/* Volume control */}
+          {/* Volume control with enhanced slider */}
           <div>
-            <h3 className="text-lg font-medium mb-2">Volume</h3>
+            <h3 className="text-lg font-medium mb-4">Volume</h3>
             <Slider 
               value={[volume]}
               min={0} 
@@ -91,9 +99,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             />
           </div>
           
-          {/* Heartbeat toggle */}
+          {/* Heartbeat toggle with refined switch */}
           <div>
-            <h3 className="text-lg font-medium mb-2">Background Heartbeat</h3>
+            <h3 className="text-lg font-medium mb-4">Background Heartbeat</h3>
             <label className="flex items-center cursor-pointer">
               <div className="relative">
                 <input
@@ -102,10 +110,18 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   checked={heartbeatEnabled}
                   onChange={onHeartbeatToggle}
                 />
-                <div className={`w-10 h-5 rounded-full transition ${heartbeatEnabled ? 'bg-white/50' : 'bg-white/20'}`} />
-                <div className={`absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition transform ${heartbeatEnabled ? 'translate-x-5' : ''}`} />
+                <div 
+                  className={`w-12 h-6 rounded-full transition-all duration-300 ${
+                    heartbeatEnabled ? 'bg-white/50' : 'bg-white/10'
+                  }`} 
+                />
+                <div 
+                  className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 transform ${
+                    heartbeatEnabled ? 'translate-x-6' : ''
+                  }`}
+                />
               </div>
-              <div className="ml-3">{heartbeatEnabled ? 'On' : 'Off'}</div>
+              <div className="ml-4 text-sm">{heartbeatEnabled ? 'On' : 'Off'}</div>
             </label>
           </div>
         </div>
