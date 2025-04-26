@@ -230,10 +230,10 @@ export class VisualEffectEngine {
     });
   }
   
-  animate = (currentTime: number = 0) => {
+  animate = (timestamp: number = 0) => {
     // Calculate delta time for smooth animations
-    const deltaTime = currentTime - this.lastFrameTime;
-    this.lastFrameTime = currentTime;
+    const deltaTime = timestamp - this.lastFrameTime;
+    this.lastFrameTime = timestamp;
     
     // Clear canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -246,15 +246,15 @@ export class VisualEffectEngine {
     
     // Add occasional background elements
     if (this.theme.backgroundEffects?.fallingPetals && 
-        currentTime - this.lastPetalTime > 2000) {
+        timestamp - this.lastPetalTime > 2000) {
       this.addRandomFallingPetal();
-      this.lastPetalTime = currentTime;
+      this.lastPetalTime = timestamp;
     }
     
     if (this.theme.backgroundEffects?.movingClouds && 
-        currentTime - this.lastCloudTime > 8000) {
+        timestamp - this.lastCloudTime > 8000) {
       this.addRandomCloud();
-      this.lastCloudTime = currentTime;
+      this.lastCloudTime = timestamp;
     }
     
     // Request next frame
@@ -418,7 +418,7 @@ export class VisualEffectEngine {
       const petal = this.fallingPetals[i];
       
       // Add gentle sway
-      const swayX = Math.sin(petal.swayOffset + (currentTime / 1000) * petal.swayFactor) * 0.5;
+      const swayX = Math.sin(petal.swayOffset + (timestamp / 1000) * petal.swayFactor) * 0.5;
       
       // Update position
       petal.y += petal.speedY * (deltaTime / 16);
