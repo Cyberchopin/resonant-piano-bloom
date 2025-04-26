@@ -67,7 +67,8 @@ export default {
 					'serene': '#151c2c',
 					'stardust': '#0a0e1a',
 					'forest': '#1a331f',
-					'deep': '#041019'
+					'deep': '#041019',
+					'sakura': '#f8f3f5'
 				}
 			},
 			borderRadius: {
@@ -132,7 +133,8 @@ export default {
 				'gradient-serene': 'linear-gradient(to bottom, rgba(21, 28, 44, 0.7), rgba(21, 28, 44, 1))',
 				'gradient-stardust': 'linear-gradient(to bottom, rgba(10, 14, 26, 0.7), rgba(10, 14, 26, 1))',
 				'gradient-forest': 'linear-gradient(to bottom, rgba(26, 51, 31, 0.7), rgba(26, 51, 31, 1))',
-				'gradient-deep': 'linear-gradient(to bottom, rgba(4, 16, 25, 0.7), rgba(4, 16, 25, 1))'
+				'gradient-deep': 'linear-gradient(to bottom, rgba(4, 16, 25, 0.7), rgba(4, 16, 25, 1))',
+				'gradient-sakura': 'linear-gradient(to bottom, rgba(248, 243, 245, 0.7), rgba(248, 243, 245, 1))',
 			}
 		}
 	},

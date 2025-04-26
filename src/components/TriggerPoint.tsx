@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { getRandomTriggerColor, ThemeConfig, getRandomParticleColor } from "../utils/themeUtils";
 import { playNoteWithTone } from "../utils/audioUtils";
@@ -21,47 +20,44 @@ const TriggerPoint: React.FC<TriggerPointProps> = ({
   visualEngine,
   volume
 }) => {
-  // Random position with padding from edges
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [color, setColor] = useState("#ffffff");
   const [isAnimating, setIsAnimating] = useState(false);
   
-  // Initialize position and color
   useEffect(() => {
     const padding = 100; // px from edges
     const x = Math.random() * (window.innerWidth - (padding * 2)) + padding;
     const y = Math.random() * (window.innerHeight - (padding * 2)) + padding;
     setPosition({ x, y });
     
-    // Set color based on theme
     setColor(getRandomTriggerColor(theme));
   }, [theme]);
   
-  // Update color when theme changes
   useEffect(() => {
     setColor(getRandomTriggerColor(theme));
   }, [theme]);
   
   const handleClick = () => {
-    // Play sound
     playNoteWithTone(note, volume);
     
-    // Create visual effects
     if (visualEngine) {
       const effectColor = getRandomParticleColor(theme);
       visualEngine.createParticleExplosion(position.x, position.y, effectColor);
       visualEngine.createRipple(position.x, position.y, effectColor);
       visualEngine.createAura(position.x, position.y, effectColor);
+      
+      if (theme.name === 'sakura') {
+        visualEngine.createFallingPetals(position.x, position.y, effectColor, 8);
+      }
     }
     
-    // Trigger animation
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(false), 300);
   };
   
-  // Determine styles based on theme shape
   const getShapeStyles = () => {
     const baseStyles = {
+      position: 'absolute' as const,
       left: position.x - size / 2,
       top: position.y - size / 2,
       width: size,
@@ -72,7 +68,6 @@ const TriggerPoint: React.FC<TriggerPointProps> = ({
       transition: 'transform 0.3s ease-out',
     };
     
-    // Shape-specific styles
     switch (theme.triggerShape) {
       case 'crystal':
         return {
@@ -95,6 +90,14 @@ const TriggerPoint: React.FC<TriggerPointProps> = ({
           filter: 'blur(3px)',
           opacity: 0.8,
         };
+      case 'petal':
+        return {
+          ...baseStyles,
+          borderRadius: '60% 40% 70% 30% / 40% 50% 60% 50%',
+          transform: isAnimating ? 'scale(1.2) rotate(45deg)' : 'scale(1) rotate(15deg)',
+          opacity: 0.9,
+          boxShadow: `0 0 ${size/3}px ${color}, inset 0 0 ${size/4}px rgba(255,255,255,0.6)`,
+        };
       case 'round':
       default:
         return baseStyles;
@@ -103,7 +106,7 @@ const TriggerPoint: React.FC<TriggerPointProps> = ({
   
   return (
     <div 
-      className={`trigger-point animate-pulse-soft ${isAnimating ? 'scale-125' : ''}`}
+      className={`trigger-point animate-pulse-soft ${isAnimating ? 'scale-125' : ''} ${theme.triggerShape}`}
       style={getShapeStyles()}
       onClick={handleClick}
     />

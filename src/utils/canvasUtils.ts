@@ -1,4 +1,3 @@
-
 import { ThemeConfig } from './themeUtils';
 
 export interface Particle {
@@ -43,6 +42,30 @@ export interface BackgroundParticle {
   speed: number;
 }
 
+interface FallingPetal {
+  x: number;
+  y: number;
+  size: number;
+  speedY: number;
+  speedX: number;
+  rotationSpeed: number;
+  rotation: number;
+  color: string;
+  opacity: number;
+  swayFactor: number;
+  swayOffset: number;
+}
+
+interface DriftingCloud {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  speed: number;
+  color: string;
+  opacity: number;
+}
+
 export class VisualEffectEngine {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -50,8 +73,12 @@ export class VisualEffectEngine {
   ripples: Ripple[] = [];
   auras: AuraEffect[] = [];
   backgroundParticles: BackgroundParticle[] = [];
+  fallingPetals: FallingPetal[] = [];
+  driftingClouds: DriftingCloud[] = [];
   theme: ThemeConfig;
   lastFrameTime: number = 0;
+  lastPetalTime: number = 0;
+  lastCloudTime: number = 0;
   
   constructor(canvas: HTMLCanvasElement, theme: ThemeConfig) {
     this.canvas = canvas;
@@ -72,6 +99,10 @@ export class VisualEffectEngine {
     // Reset background particles for new theme
     this.backgroundParticles = [];
     this.initBackgroundParticles();
+    
+    // Clear special effects when theme changes
+    this.fallingPetals = [];
+    this.driftingClouds = [];
   }
   
   initBackgroundParticles() {
@@ -144,6 +175,61 @@ export class VisualEffectEngine {
     });
   }
   
+  createFallingPetals(x: number, y: number, color: string, count = 5) {
+    for (let i = 0; i < count; i++) {
+      const size = Math.random() * 10 + 8;
+      this.fallingPetals.push({
+        x: x + (Math.random() * 40 - 20),
+        y: y,
+        size: size,
+        speedY: Math.random() * 1 + 0.5,
+        speedX: Math.random() * 1 - 0.5,
+        rotationSpeed: Math.random() * 0.02 - 0.01,
+        rotation: Math.random() * Math.PI * 2,
+        color: color,
+        opacity: 0.8,
+        swayFactor: Math.random() * 2 + 1,
+        swayOffset: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  
+  addRandomFallingPetal() {
+    if (!this.theme.backgroundEffects?.fallingPetals) return;
+    
+    const size = Math.random() * 12 + 6;
+    this.fallingPetals.push({
+      x: Math.random() * this.canvas.width,
+      y: -size,
+      size: size,
+      speedY: Math.random() * 0.7 + 0.3,
+      speedX: Math.random() * 0.5 - 0.25,
+      rotationSpeed: Math.random() * 0.01 - 0.005,
+      rotation: Math.random() * Math.PI * 2,
+      color: this.theme.particleColors[Math.floor(Math.random() * this.theme.particleColors.length)],
+      opacity: Math.random() * 0.3 + 0.3,
+      swayFactor: Math.random() * 1.5 + 0.5,
+      swayOffset: Math.random() * Math.PI * 2
+    });
+  }
+  
+  addRandomCloud() {
+    if (!this.theme.backgroundEffects?.movingClouds) return;
+    
+    const width = Math.random() * 300 + 100;
+    const height = width * (Math.random() * 0.4 + 0.3);
+    
+    this.driftingClouds.push({
+      x: -width,
+      y: Math.random() * (this.canvas.height * 0.7),
+      width: width,
+      height: height,
+      speed: Math.random() * 0.2 + 0.05,
+      color: 'rgba(255,255,255,0.8)',
+      opacity: Math.random() * 0.1 + 0.05
+    });
+  }
+  
   animate = (currentTime: number = 0) => {
     // Calculate delta time for smooth animations
     const deltaTime = currentTime - this.lastFrameTime;
@@ -157,6 +243,19 @@ export class VisualEffectEngine {
     
     // Update and draw effects
     this.updateAndDrawEffects(deltaTime);
+    
+    // Add occasional background elements
+    if (this.theme.backgroundEffects?.fallingPetals && 
+        currentTime - this.lastPetalTime > 2000) {
+      this.addRandomFallingPetal();
+      this.lastPetalTime = currentTime;
+    }
+    
+    if (this.theme.backgroundEffects?.movingClouds && 
+        currentTime - this.lastCloudTime > 8000) {
+      this.addRandomCloud();
+      this.lastCloudTime = currentTime;
+    }
     
     // Request next frame
     requestAnimationFrame(this.animate);
@@ -180,6 +279,43 @@ export class VisualEffectEngine {
       this.ctx.beginPath();
       this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
       this.ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+      this.ctx.fill();
+    }
+    
+    // Update and draw drifting clouds
+    for (let i = this.driftingClouds.length - 1; i >= 0; i--) {
+      const cloud = this.driftingClouds[i];
+      
+      // Move cloud
+      cloud.x += cloud.speed * (deltaTime / 16);
+      
+      // Remove if out of bounds
+      if (cloud.x > this.canvas.width + cloud.width) {
+        this.driftingClouds.splice(i, 1);
+        continue;
+      }
+      
+      // Draw cloud (simulated with a gradient or shape)
+      const gradient = this.ctx.createRadialGradient(
+        cloud.x + cloud.width / 2, 
+        cloud.y + cloud.height / 2, 
+        0, 
+        cloud.x + cloud.width / 2, 
+        cloud.y + cloud.height / 2, 
+        cloud.width / 2
+      );
+      gradient.addColorStop(0, `rgba(255, 255, 255, ${cloud.opacity})`);
+      gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+      
+      this.ctx.beginPath();
+      this.ctx.ellipse(
+        cloud.x + cloud.width / 2, 
+        cloud.y + cloud.height / 2, 
+        cloud.width / 2, 
+        cloud.height / 2, 
+        0, 0, Math.PI * 2
+      );
+      this.ctx.fillStyle = gradient;
       this.ctx.fill();
     }
   }
@@ -275,6 +411,49 @@ export class VisualEffectEngine {
       
       this.ctx.fillStyle = gradient;
       this.ctx.fill();
+    }
+    
+    // Update and draw falling petals
+    for (let i = this.fallingPetals.length - 1; i >= 0; i--) {
+      const petal = this.fallingPetals[i];
+      
+      // Add gentle sway
+      const swayX = Math.sin(petal.swayOffset + (currentTime / 1000) * petal.swayFactor) * 0.5;
+      
+      // Update position
+      petal.y += petal.speedY * (deltaTime / 16);
+      petal.x += (petal.speedX + swayX) * (deltaTime / 16);
+      petal.rotation += petal.rotationSpeed * (deltaTime / 16);
+      
+      // Remove if out of bounds
+      if (petal.y > this.canvas.height + petal.size) {
+        this.fallingPetals.splice(i, 1);
+        continue;
+      }
+      
+      // Draw petal
+      this.ctx.save();
+      this.ctx.translate(petal.x, petal.y);
+      this.ctx.rotate(petal.rotation);
+      
+      // Draw petal shape
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, -petal.size / 2);
+      this.ctx.bezierCurveTo(
+        petal.size / 2, -petal.size / 4,
+        petal.size / 2, petal.size / 4,
+        0, petal.size / 2
+      );
+      this.ctx.bezierCurveTo(
+        -petal.size / 2, petal.size / 4,
+        -petal.size / 2, -petal.size / 4,
+        0, -petal.size / 2
+      );
+      
+      // Set fill style with opacity
+      this.ctx.fillStyle = petal.color.replace(')', `, ${petal.opacity})`).replace('rgb', 'rgba');
+      this.ctx.fill();
+      this.ctx.restore();
     }
   }
 }

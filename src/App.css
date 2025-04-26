@@ -49,3 +49,82 @@ body, html {
   border-radius: 45%;
   filter: blur(3px);
 }
+
+.trigger-point.petal {
+  border-radius: 60% 40% 70% 30% / 40% 50% 60% 50%;
+  filter: blur(1px);
+  transition: all 0.5s ease;
+}
+
+.trigger-point.petal:hover {
+  transform: rotate(45deg) scale(1.05);
+  filter: blur(0px);
+}
+
+/* Animation for falling petals */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  33% {
+    transform: translateX(30px) rotate(10deg);
+  }
+  66% {
+    transform: translateX(-30px) rotate(-10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+.falling-petal {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255, 203, 211, 0.6);
+  border-radius: 60% 40% 70% 30% / 40% 50% 60% 50%;
+  animation: fall linear, sway ease-in-out infinite alternate;
+  filter: blur(1px);
+  box-shadow: 0 0 5px rgba(255, 203, 211, 0.4);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Moving clouds animation */
+@keyframes cloudDrift {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.2;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+}
+
+.drifting-cloud {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  filter: blur(20px);
+  z-index: 0;
+  animation: cloudDrift linear;
+  pointer-events: none;
+}

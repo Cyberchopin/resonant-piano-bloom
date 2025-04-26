@@ -1,5 +1,4 @@
-
-export type ThemeName = 'serene' | 'stardust' | 'forest' | 'deep';
+export type ThemeName = 'serene' | 'stardust' | 'forest' | 'deep' | 'sakura';
 
 export interface ThemeConfig {
   name: ThemeName;
@@ -9,7 +8,13 @@ export interface ThemeConfig {
   triggerColors: string[];
   particleColors: string[];
   textColor: string;
-  triggerShape: 'round' | 'crystal' | 'leaf' | 'anemone';
+  triggerShape: 'round' | 'crystal' | 'leaf' | 'anemone' | 'petal';
+  backgroundEffects?: {
+    fallingPetals?: boolean;
+    twinklingStars?: boolean;
+    risingBubbles?: boolean;
+    movingClouds?: boolean;
+  };
 }
 
 export const themes: Record<ThemeName, ThemeConfig> = {
@@ -96,6 +101,31 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ],
     textColor: '#7ab3cc',
     triggerShape: 'anemone',
+  },
+  sakura: {
+    name: 'sakura',
+    displayName: 'Sakura Breeze · Water Moon Mirror',
+    backgroundColor: '#f8f3f5',
+    gradientClass: 'bg-gradient-sakura',
+    triggerColors: [
+      '#ffcbd3', // Soft cherry blossom pink
+      '#ffd8e2', // Light pink
+      '#eae5ff', // Soft lavender
+      '#e2f0fd', // Pale sky blue
+      '#edf8ff', // Crystal blue
+    ],
+    particleColors: [
+      'rgba(255, 203, 211, 0.8)', // Soft cherry blossom pink
+      'rgba(255, 216, 226, 0.8)', // Light pink
+      'rgba(234, 229, 255, 0.8)', // Soft lavender
+      'rgba(226, 240, 253, 0.8)', // Pale sky blue
+    ],
+    textColor: '#454356',
+    triggerShape: 'petal',
+    backgroundEffects: {
+      fallingPetals: true,
+      movingClouds: true
+    }
   }
 };
 

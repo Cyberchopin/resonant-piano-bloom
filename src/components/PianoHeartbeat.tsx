@@ -64,6 +64,17 @@ const PianoHeartbeat: React.FC = () => {
   useEffect(() => {
     if (visualEngineRef.current) {
       visualEngineRef.current.setTheme(themes[currentTheme]);
+      
+      // Adjust trigger points for the new theme
+      setTriggerPoints(prev => 
+        prev.map(point => ({
+          ...point,
+          // Adjust size based on theme - sakura theme has smaller petals
+          size: currentTheme === 'sakura' ? 
+            Math.random() * 15 + 30 : 
+            Math.random() * 20 + 40
+        }))
+      );
     }
   }, [currentTheme]);
   
