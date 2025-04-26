@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,11 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				theme: {
+					'stardust': '#0a192f',
+					'forest': '#1a4027',
+					'mist': '#e5eaf1'
 				}
 			},
 			borderRadius: {
@@ -84,11 +90,47 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-soft': {
+					'0%, 100%': { 
+						transform: 'scale(1)',
+						opacity: '0.7'
+					},
+					'50%': { 
+						transform: 'scale(1.1)',
+						opacity: '1' 
+					}
+				},
+				'float': {
+					'0%, 100%': { 
+						transform: 'translateY(0px)'
+					},
+					'50%': { 
+						transform: 'translateY(-10px)'
+					}
+				},
+				'ripple': {
+					'0%': {
+						transform: 'scale(0)',
+						opacity: '1'
+					},
+					'100%': {
+						transform: 'scale(4)',
+						opacity: '0'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-soft': 'pulse-soft 4s ease-in-out infinite',
+				'float': 'float 6s ease-in-out infinite',
+				'ripple': 'ripple 1s ease-out forwards'
+			},
+			backgroundImage: {
+				'gradient-stardust': 'linear-gradient(to bottom, rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 1))',
+				'gradient-forest': 'linear-gradient(to bottom, rgba(26, 64, 39, 0.7), rgba(26, 64, 39, 1))',
+				'gradient-mist': 'linear-gradient(to bottom, rgba(229, 234, 241, 0.7), rgba(229, 234, 241, 1))'
 			}
 		}
 	},
