@@ -25,3 +25,27 @@ body, html {
     opacity: 1;
   }
 }
+
+/* Theme-specific styles */
+.theme-option-large {
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.theme-option-large:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Trigger point shape variations */
+.trigger-point.crystal {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.trigger-point.leaf {
+  border-radius: 50% 0 50% 0;
+}
+
+.trigger-point.anemone {
+  border-radius: 45%;
+  filter: blur(3px);
+}

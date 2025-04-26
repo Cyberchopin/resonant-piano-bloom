@@ -59,19 +59,52 @@ const TriggerPoint: React.FC<TriggerPointProps> = ({
     setTimeout(() => setIsAnimating(false), 300);
   };
   
+  // Determine styles based on theme shape
+  const getShapeStyles = () => {
+    const baseStyles = {
+      left: position.x - size / 2,
+      top: position.y - size / 2,
+      width: size,
+      height: size,
+      backgroundColor: color,
+      boxShadow: `0 0 ${size/2}px ${color}`,
+      transform: isAnimating ? 'scale(1.2)' : 'scale(1)',
+      transition: 'transform 0.3s ease-out',
+    };
+    
+    // Shape-specific styles
+    switch (theme.triggerShape) {
+      case 'crystal':
+        return {
+          ...baseStyles,
+          clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
+          boxShadow: `0 0 ${size/2}px ${color}, inset 0 0 ${size/6}px rgba(255,255,255,0.8)`,
+          animation: 'pulse-soft 5s ease-in-out infinite alternate',
+        };
+      case 'leaf':
+        return {
+          ...baseStyles,
+          borderRadius: '50% 0 50% 0',
+          transform: isAnimating ? 'scale(1.2) rotate(45deg)' : 'scale(1) rotate(45deg)',
+        };
+      case 'anemone':
+        return {
+          ...baseStyles,
+          borderRadius: '45%',
+          boxShadow: `0 0 ${size/4}px ${color}`,
+          filter: 'blur(3px)',
+          opacity: 0.8,
+        };
+      case 'round':
+      default:
+        return baseStyles;
+    }
+  };
+  
   return (
     <div 
       className={`trigger-point animate-pulse-soft ${isAnimating ? 'scale-125' : ''}`}
-      style={{
-        left: position.x - size / 2,
-        top: position.y - size / 2,
-        width: size,
-        height: size,
-        backgroundColor: color,
-        boxShadow: `0 0 ${size/2}px ${color}`,
-        transform: isAnimating ? 'scale(1.2)' : 'scale(1)',
-        transition: 'transform 0.3s ease-out'
-      }}
+      style={getShapeStyles()}
       onClick={handleClick}
     />
   );

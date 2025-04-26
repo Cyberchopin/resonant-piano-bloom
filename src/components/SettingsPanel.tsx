@@ -60,15 +60,20 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           {/* Theme selection */}
           <div>
             <h3 className="text-lg font-medium mb-2">Theme</h3>
-            <div className="flex space-x-3">
+            <div className="flex flex-col space-y-3">
               {Object.entries(themes).map(([themeName, theme]) => (
                 <button
                   key={themeName}
-                  className={`theme-option ${currentTheme === themeName ? 'active' : ''}`}
-                  style={{ backgroundColor: theme.backgroundColor }}
+                  className={`theme-option-large flex items-center p-2 rounded-md transition-colors ${currentTheme === themeName ? 'bg-white/20' : 'hover:bg-white/10'}`}
                   onClick={() => onThemeChange(themeName as ThemeName)}
-                  aria-label={`${themeName} theme`}
-                />
+                  aria-label={`${theme.displayName} theme`}
+                >
+                  <div 
+                    className="w-8 h-8 rounded-full mr-3"
+                    style={{ backgroundColor: theme.backgroundColor, boxShadow: `0 0 10px ${theme.triggerColors[0]}` }}
+                  />
+                  <span>{theme.displayName}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -97,7 +102,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   checked={heartbeatEnabled}
                   onChange={onHeartbeatToggle}
                 />
-                <div className={`w-10 h-5 rounded-full transition ${heartbeatEnabled ? 'bg-blue-500' : 'bg-gray-400'}`} />
+                <div className={`w-10 h-5 rounded-full transition ${heartbeatEnabled ? 'bg-white/50' : 'bg-white/20'}`} />
                 <div className={`absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition transform ${heartbeatEnabled ? 'translate-x-5' : ''}`} />
               </div>
               <div className="ml-3">{heartbeatEnabled ? 'On' : 'Off'}</div>

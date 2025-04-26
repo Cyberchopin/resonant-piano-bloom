@@ -64,9 +64,10 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				theme: {
-					'stardust': '#0a192f',
-					'forest': '#1a4027',
-					'mist': '#e5eaf1'
+					'serene': '#151c2c',
+					'stardust': '#0a0e1a',
+					'forest': '#1a331f',
+					'deep': '#041019'
 				}
 			},
 			borderRadius: {
@@ -128,9 +129,10 @@ export default {
 				'ripple': 'ripple 1s ease-out forwards'
 			},
 			backgroundImage: {
-				'gradient-stardust': 'linear-gradient(to bottom, rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 1))',
-				'gradient-forest': 'linear-gradient(to bottom, rgba(26, 64, 39, 0.7), rgba(26, 64, 39, 1))',
-				'gradient-mist': 'linear-gradient(to bottom, rgba(229, 234, 241, 0.7), rgba(229, 234, 241, 1))'
+				'gradient-serene': 'linear-gradient(to bottom, rgba(21, 28, 44, 0.7), rgba(21, 28, 44, 1))',
+				'gradient-stardust': 'linear-gradient(to bottom, rgba(10, 14, 26, 0.7), rgba(10, 14, 26, 1))',
+				'gradient-forest': 'linear-gradient(to bottom, rgba(26, 51, 31, 0.7), rgba(26, 51, 31, 1))',
+				'gradient-deep': 'linear-gradient(to bottom, rgba(4, 16, 25, 0.7), rgba(4, 16, 25, 1))'
 			}
 		}
 	},

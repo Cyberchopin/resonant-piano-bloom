@@ -1,79 +1,102 @@
 
-export type ThemeName = 'stardust' | 'forest' | 'mist';
+export type ThemeName = 'serene' | 'stardust' | 'forest' | 'deep';
 
 export interface ThemeConfig {
   name: ThemeName;
+  displayName: string;
   backgroundColor: string;
   gradientClass: string;
   triggerColors: string[];
   particleColors: string[];
   textColor: string;
+  triggerShape: 'round' | 'crystal' | 'leaf' | 'anemone';
 }
 
 export const themes: Record<ThemeName, ThemeConfig> = {
-  stardust: {
-    name: 'stardust',
-    backgroundColor: '#0a192f',
-    gradientClass: 'bg-gradient-stardust',
+  serene: {
+    name: 'serene',
+    displayName: 'Serene Moonlight Lakeside',
+    backgroundColor: '#151c2c',
+    gradientClass: 'bg-gradient-serene',
     triggerColors: [
-      '#f8c6ff', // Light purple
-      '#a2d2ff', // Light blue
-      '#ccd6f6', // Silver
-      '#ffcaa6', // Light orange
-      '#ffd6ff', // Light pink
-      '#d4e8ff', // Baby blue
-      '#ffffbf', // Light yellow
+      '#e8f1ff', // Moon white
+      '#c3d7eb', // Soft silver
+      '#f9f3d9', // Warm pale yellow
+      '#d6e5f3', // Light blue
+      '#e2dfe9', // Lavender gray
     ],
     particleColors: [
-      'rgba(248, 198, 255, 0.8)',
-      'rgba(162, 210, 255, 0.8)',
-      'rgba(204, 214, 246, 0.8)',
-      'rgba(255, 202, 166, 0.8)',
+      'rgba(232, 241, 255, 0.8)',
+      'rgba(195, 215, 235, 0.8)',
+      'rgba(249, 243, 217, 0.8)',
+      'rgba(214, 229, 243, 0.8)',
     ],
-    textColor: '#ccd6f6',
+    textColor: '#e8f1ff',
+    triggerShape: 'round',
+  },
+  stardust: {
+    name: 'stardust',
+    displayName: 'Whispering Stardust Grotto',
+    backgroundColor: '#0a0e1a',
+    gradientClass: 'bg-gradient-stardust',
+    triggerColors: [
+      '#e0e8ff', // Silver
+      '#a2c4ff', // Ice blue
+      '#d6c2ff', // Soft purple
+      '#b3ffea', // Emerald green hint
+      '#ecf7ff', // Bright star white
+    ],
+    particleColors: [
+      'rgba(224, 232, 255, 0.8)',
+      'rgba(162, 196, 255, 0.8)',
+      'rgba(214, 194, 255, 0.8)',
+      'rgba(179, 255, 234, 0.8)',
+    ],
+    textColor: '#e0e8ff',
+    triggerShape: 'crystal',
   },
   forest: {
     name: 'forest',
-    backgroundColor: '#1a4027',
+    displayName: 'Pulse of the Forest Heart',
+    backgroundColor: '#1a331f',
     gradientClass: 'bg-gradient-forest',
     triggerColors: [
-      '#9fff9c', // Light green
-      '#eaac8b', // Light brown
-      '#ffd166', // Gold
-      '#c2f784', // Moss green
-      '#d8f8b7', // Light lime
-      '#e6c870', // Amber
-      '#b1cc74', // Olive green
+      '#a2d9a1', // Moss green
+      '#e6c870', // Warm amber
+      '#ffd166', // Soft yellow
+      '#ffa9b7', // Soft pink (wildflower)
+      '#c2f784', // Fresh leaf green
     ],
     particleColors: [
-      'rgba(159, 255, 156, 0.8)',
-      'rgba(234, 172, 139, 0.8)',
+      'rgba(162, 217, 161, 0.8)',
+      'rgba(230, 200, 112, 0.8)',
       'rgba(255, 209, 102, 0.8)',
-      'rgba(194, 247, 132, 0.8)',
+      'rgba(255, 169, 183, 0.8)',
     ],
-    textColor: '#f1faea',
+    textColor: '#e6eede',
+    triggerShape: 'leaf',
   },
-  mist: {
-    name: 'mist',
-    backgroundColor: '#e5eaf1',
-    gradientClass: 'bg-gradient-mist',
+  deep: {
+    name: 'deep',
+    displayName: 'Echoes from the Deep',
+    backgroundColor: '#041019',
+    gradientClass: 'bg-gradient-deep',
     triggerColors: [
-      '#d0e8f2', // Silver blue
-      '#f9c6d7', // Light pink
-      '#c5d7ea', // Light blue gray
-      '#a9c7c5', // Light teal
-      '#e6b8d9', // Lavender
-      '#c9d3df', // Gray blue
-      '#eedffc', // Pale purple
+      '#0a5e78', // Deep phosphorescent blue
+      '#107855', // Deep emerald
+      '#3d2e32', // Deep amber
+      '#192f3e', // Dark navy
+      '#1f3b32', // Dark teal
     ],
     particleColors: [
-      'rgba(208, 232, 242, 0.8)',
-      'rgba(249, 198, 215, 0.8)',
-      'rgba(197, 215, 234, 0.8)',
-      'rgba(169, 199, 197, 0.8)',
+      'rgba(10, 94, 120, 0.7)',
+      'rgba(16, 120, 85, 0.7)',
+      'rgba(61, 46, 50, 0.7)',
+      'rgba(25, 47, 62, 0.7)',
     ],
-    textColor: '#4a5568',
-  },
+    textColor: '#7ab3cc',
+    triggerShape: 'anemone',
+  }
 };
 
 export const getRandomTriggerColor = (theme: ThemeConfig): string => {

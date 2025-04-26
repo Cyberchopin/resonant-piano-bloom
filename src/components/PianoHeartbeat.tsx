@@ -11,7 +11,7 @@ const NOTES = ["C4", "D4", "E4", "G4", "A4", "C5", "D5"];
 
 const PianoHeartbeat: React.FC = () => {
   // State
-  const [currentTheme, setCurrentTheme] = useState<ThemeName>("stardust");
+  const [currentTheme, setCurrentTheme] = useState<ThemeName>("serene");
   const [volume, setVolume] = useState(0.7);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [heartbeatEnabled, setHeartbeatEnabled] = useState(false);
